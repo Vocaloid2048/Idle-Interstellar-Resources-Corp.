@@ -1,2 +1,14 @@
-# Idle-Interstellar-Resources-Corp.
-在這款以太空為背景的閒置遊戲中，您將從一個默默無聞的太空拾荒者起步，逐步發展成為跨星系的資源巨擘！最初，您需要收集太空垃圾來賺取資金，並隨著技術的進步，解鎖更多資源豐富的星球，開採貴重的礦物資源。最終，您將不僅僅是資源的開採者，還會成為能量供應的主導者，掌控整個星際經濟。
+This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
+
+* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
+  It contains several subfolders:
+  - `commonMain` is for code that’s common for all targets.
+  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
+    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
+    `iosMain` would be the right folder for such calls.
+
+* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
+  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+
+
+Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
