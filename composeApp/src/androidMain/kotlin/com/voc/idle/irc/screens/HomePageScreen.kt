@@ -1,5 +1,7 @@
 package com.voc.idle.irc.screens
 
+import NavigationBar
+import NavigationItemData
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,38 +24,29 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.voc.idle.irc.R
 import com.voc.idle.irc.components.LineOrientation
+import com.voc.idle.irc.components.MultiplyButtonBar
 import com.voc.idle.irc.components.NonLazyGrid
 import com.voc.idle.irc.components.SpacerDashLine
 import com.voc.idle.irc.utils.UtilTools
@@ -62,7 +55,6 @@ import utils.FontShadow
 import utils.FontSizeNormal12
 import utils.FontSizeNormal14
 import utils.IRCTheme
-import kotlin.math.sin
 
 @Composable
 fun HomePageScreen() {
@@ -79,10 +71,11 @@ fun HomePageScreen() {
             Spacer(modifier = Modifier.height(8.dp))
 
             //Main Content 主要內容
-            Box(modifier = Modifier.fillMaxSize().weight(1f)) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .weight(1f)) {
                 when(selectedItem.value){
-                    0 -> RedeemPage()
-                    
+                    0 -> { RedeemPage() }
                 }
             }
 
@@ -95,18 +88,50 @@ fun HomePageScreen() {
     }
 }
 
-@Preview()
+@Composable
+fun RedeemPage() {
+    Box(){
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(120.dp),
+            contentPadding = PaddingValues(8.dp, bottom = 64.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .graphicsLayer { alpha = 0.99f }
+
+        ) {
+            items(20) {it ->
+                ItemView(it * 10, it)
+            }
+        }
+
+        Box(modifier = Modifier.align(Alignment.BottomCenter).padding(8.dp)){
+            MultiplyButtonBar()
+        }
+    }
+}
+
+@Composable
+fun UpgradePage(){
+
+}
+
 @Composable
 fun ItemView(currHave : Int = 0, ableToBuy : Int = 0){
     Box(
         modifier = Modifier
             .size(120.dp)
             .background(Color.Black, RoundedCornerShape(12.dp))
-            .border(1.dp, if(ableToBuy > 0 ) Color.White else Color.Transparent, RoundedCornerShape(12.dp))
+            .border(
+                1.dp,
+                if (ableToBuy > 0) Color.White else Color.Transparent,
+                RoundedCornerShape(12.dp)
+            )
             .clip(RoundedCornerShape(12.dp))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
-                indication = ripple(),
+                indication = rememberRipple(),
                 onClick = {}
             )
     ){
@@ -119,7 +144,9 @@ fun ItemView(currHave : Int = 0, ableToBuy : Int = 0){
         )
 
         //Column with item info 物品資訊
-        Column (modifier = Modifier.fillMaxSize().padding(4.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column (modifier = Modifier
+            .fillMaxSize()
+            .padding(4.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             //Item name 物品名稱
             Text(
                 "鐵礦",
@@ -136,7 +163,7 @@ fun ItemView(currHave : Int = 0, ableToBuy : Int = 0){
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    "x${currHave}",
+                "x${currHave}",
                     color = Color.White,
                     style = FontSizeNormal12() + FontShadow(),
                     textAlign = TextAlign.Center,
@@ -166,7 +193,7 @@ fun ItemView(currHave : Int = 0, ableToBuy : Int = 0){
                 )
                 Spacer(modifier = Modifier.width(2.dp))
                 Text(
-                    "+123.45K/s",
+                "+123.45K/s",
                     color = Color.White,
                     modifier = Modifier.wrapContentWidth(),
                     style = FontSizeNormal12() + FontShadow(),
@@ -176,11 +203,12 @@ fun ItemView(currHave : Int = 0, ableToBuy : Int = 0){
     }
 }
 
-@Preview()
 @Composable
 fun CurrencyUI(){
     Row(
-        modifier = Modifier.height(88.dp).fillMaxWidth()
+        modifier = Modifier
+            .height(88.dp)
+            .fillMaxWidth()
     ) {
         //Currency Row 貨幣列
         Row(
@@ -212,13 +240,14 @@ fun CurrencyUI(){
                         ), modifier = Modifier.align(Alignment.CenterVertically),
                         style = FontSizeNormal14(),
                         color = Color.White
-                    ) //Currency Value
-                    //Currency Value
+                    )
                 }
             }
         }
         //Spacer Dash Line 間隔線
-        SpacerDashLine(modifier = Modifier.fillMaxHeight().width(0.5.dp), orientation = LineOrientation.VERTICAL)
+        SpacerDashLine(modifier = Modifier
+            .fillMaxHeight()
+            .width(0.5.dp), orientation = LineOrientation.VERTICAL)
 
         //Gift Icon 禮物圖標
         Image(
@@ -236,31 +265,22 @@ fun CurrencyUI(){
 
 @Composable
 fun BottomNavigationBar(selectedItem : MutableState<Int>) {
-    val navigationBarItemArray = arrayOf("兌換", "升級", "研究", "轉讓", "設定")
-    NavigationBar {
-        navigationBarItemArray.forEachIndexed { index, item ->
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = when (item) {
-                            "兌換" -> R.drawable.ui_icon_grid
-                            "升級" -> R.drawable.ui_icon_upgrade
-                            "研究" -> R.drawable.ui_icon_research
-                            "轉讓" -> R.drawable.ui_icon_transfer
-                            "設定" -> R.drawable.ui_icon_setting
-                            else -> R.drawable.ui_icon_missing
-                        }),
-                        contentDescription = item,
-                        modifier = Modifier.size(24.dp)
-                    )
-                },
-                label = { Text(item) },
-                selected = selectedItem.value == index,
-                onClick = { selectedItem.value = index }
-            )
-        }
-    }
+    val items = listOf(
+        NavigationItemData("兌換", ImageVector.vectorResource(id = R.drawable.ui_icon_grid)),
+        NavigationItemData("升級", ImageVector.vectorResource(id = R.drawable.ui_icon_upgrade)),
+        NavigationItemData("研究", ImageVector.vectorResource(id = R.drawable.ui_icon_research)),
+        NavigationItemData("轉讓", ImageVector.vectorResource(id = R.drawable.ui_icon_transfer)),
+        NavigationItemData("設定", ImageVector.vectorResource(id = R.drawable.ui_icon_setting)),
+    )
+
+    NavigationBar(
+        items = items,
+        selectedIndex = selectedItem.value,
+        onItemSelected = { selectedItem.value = it }
+    )
+
 }
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomePageScreenPreview() {
