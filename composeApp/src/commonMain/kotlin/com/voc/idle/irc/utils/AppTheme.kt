@@ -6,7 +6,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -93,6 +95,9 @@ fun AppFontSpecial() = FontFamily(
 fun AppTypography() = androidx.compose.material.Typography(
     defaultFontFamily = AppFont()
 )
+
+@Composable
+fun FontShadow() = TextStyle(shadow = Shadow(color = Color.Black, offset = Offset(2.0f, 2.0f)))
 
 @Composable
 fun FontSizeNormal8() = TextStyle(
