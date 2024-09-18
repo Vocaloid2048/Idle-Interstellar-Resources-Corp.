@@ -29,7 +29,6 @@ import com.voc.idle.irc.screens.SplashPage
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import kotlinx.datetime.Clock
-import screens.MakeBackground
 
 //This should not be there, but CharacterCard need it in clickable, without using @Composable ...
 lateinit var navControllerInstance : NavController
@@ -101,7 +100,7 @@ fun RootContent(
             SnackbarHost(snackbarHostState!!)
         },
     ) {
-        MakeBackground(screen = screen)
+        //MakeBackground(screen = screen)
         //Landscape can do ... ?
         Box(
             modifier = Modifier.haze(hazeStateRoot)

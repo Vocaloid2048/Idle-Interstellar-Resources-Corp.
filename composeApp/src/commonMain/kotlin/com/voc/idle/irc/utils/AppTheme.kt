@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import files.Res
 import files.good_times_rg
@@ -46,6 +47,8 @@ private val DarkColorScheme = darkColors(
     secondary = PurpleGrey80
 )
 
+val PageSafeArea = 16.dp
+
 private val LightColorScheme = lightColors(
     primary = Purple40,
     secondary = PurpleGrey40,
@@ -60,7 +63,7 @@ private val LightColorScheme = lightColors(
 )
 
 @Composable
-fun Stargazer3Theme(
+fun IRCTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

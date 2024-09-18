@@ -4,13 +4,13 @@ import androidx.compose.runtime.*
 import androidx.navigation.compose.rememberNavController
 import com.voc.idle.irc.screens.SplashPage
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import utils.Stargazer3Theme
+import utils.IRCTheme
 
 
 @Composable
 @Preview
 fun App() {
-    Stargazer3Theme {
+    IRCTheme {
         SplashPage(navController = rememberNavController())
     }
 }
