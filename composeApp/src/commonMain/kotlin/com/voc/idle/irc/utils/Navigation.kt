@@ -25,6 +25,7 @@ import com.dokar.sonner.rememberToasterState
 import com.russhwolf.settings.Settings
 import com.voc.idle.irc.components.HeaderData
 import com.voc.idle.irc.components.defaultHeaderData
+import com.voc.idle.irc.screens.HomePageScreen
 import com.voc.idle.irc.screens.SplashPage
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
@@ -67,7 +68,7 @@ fun Navigation() {
                 snackbarHostState = snackbarHostState
             ) {
                 Box {
-                    //HomePage(navController = navController, headerData = Screen.HomePage.headerData)
+                    HomePageScreen(navController = navController, headerData = Screen.HomePage.headerData)
                 }
             }
         }
@@ -75,14 +76,14 @@ fun Navigation() {
 
 }
 
-fun navigateLimited(route: String, options: NavOptions? = null) {
+fun NavController.navigateLimited(route: String, options: NavOptions? = null) {
     val navigationInterval: Long = 1000 // 1 second
     val lastNavigationTime: Long = Settings().getLong("lastNavigationTime", 0)
 
     val currentTime = Clock.System.now().toEpochMilliseconds()
     if (currentTime - lastNavigationTime >= navigationInterval) {
-
         Settings().putLong("lastNavigationTime", currentTime)
+        navigate(route, options)
     }
 }
 

@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -40,12 +41,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.voc.idle.irc.R
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.voc.idle.irc.components.HeaderData
 import com.voc.idle.irc.components.HoverButtonBar
 import com.voc.idle.irc.components.LineOrientation
 import com.voc.idle.irc.components.MultiplyEnum
@@ -54,8 +54,18 @@ import com.voc.idle.irc.components.SpacerDashLine
 import com.voc.idle.irc.utils.UtilTools
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
-import org.jetbrains.compose.resources.imageResource
-import screens.MakeBackground
+import files.Res
+import files.coding_band_round
+import files.item_iron_img
+import files.ui_icon_gift
+import files.ui_icon_grid
+import files.ui_icon_missing
+import files.ui_icon_research
+import files.ui_icon_setting
+import files.ui_icon_transfer
+import files.ui_icon_upgrade
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.vectorResource
 import utils.FontShadow
 import utils.FontSizeNormal12
 import utils.FontSizeNormal14
@@ -64,7 +74,11 @@ import utils.IRCTheme
 import utils.PageSafeArea
 
 @Composable
-fun HomePageScreen() {
+fun HomePageScreen(
+    navController: NavController = rememberNavController(),
+    modifier: Modifier = Modifier,
+    headerData: HeaderData = HeaderData()
+) {
     var selectedItem = remember { mutableStateOf(0) }
 
     //Root Frame of the HomePage
@@ -84,6 +98,7 @@ fun HomePageScreen() {
                 when(selectedItem.value){
                     0 -> { RedeemPage() }
                     1 -> { UpgradePage() }
+                    2 -> { ResearchPage() }
                 }
             }
 
@@ -131,7 +146,7 @@ fun RedeemPage() {
 @Composable
 fun UpgradePage(){
     val hazeState = remember { HazeState() }
-    val choiceList = arrayListOf<ImageVector>(ImageVector.vectorResource(R.drawable.ui_icon_missing))
+    val choiceList = arrayListOf<ImageVector>(vectorResource(Res.drawable.ui_icon_missing))
 
     //Root of Upgrade Page 升級頁面
     Column(modifier = Modifier.fillMaxSize().padding(start = PageSafeArea, end = PageSafeArea)) {
@@ -155,8 +170,32 @@ fun UpgradePage(){
                 .graphicsLayer { alpha = 0.99f }
                 .haze(hazeState)
         ) {
-             items(20) {it ->
+            items(20) {it ->
                 ItemUpgradeView()
+            }
+        }
+    }
+}
+
+@Composable
+fun ResearchPage(){
+    val hazeState = remember { HazeState() }
+    val choiceList = arrayListOf<ImageVector>(vectorResource(Res.drawable.ui_icon_missing))
+
+    //Root of Research Page 研究頁面
+    Column(modifier = Modifier.fillMaxSize().padding(start = PageSafeArea, end = PageSafeArea)) {
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(1),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .graphicsLayer { alpha = 0.99f }
+                .haze(hazeState)
+        ) {
+            items(20) {it ->
+                ItemResearchView()
             }
         }
     }
@@ -183,7 +222,7 @@ fun ItemGridView(currHave : Int = 0, ableToBuy : Int = 0){
     ){
         //Image of that item 物品圖片
         Image(
-            painter = painterResource(id = R.drawable.item_iron_img),
+            painter = painterResource(resource = Res.drawable.item_iron_img),
             contentDescription = "Item Image",
             modifier = Modifier
                 .fillMaxSize()
@@ -231,7 +270,7 @@ fun ItemGridView(currHave : Int = 0, ableToBuy : Int = 0){
             //Item provided currency count 物品提供的貨幣數量
             Row(modifier = Modifier.padding(start = 4.dp, end = 4.dp)) {
                 Image(
-                    painter = painterResource(id = R.drawable.coding_band_round),
+                    painter = painterResource(resource = Res.drawable.coding_band_round),
                     contentDescription = "Currency Icon",
                     modifier = Modifier
                         .height(16.dp)
@@ -250,9 +289,8 @@ fun ItemGridView(currHave : Int = 0, ableToBuy : Int = 0){
 }
 
 @Composable
-@Preview(showBackground = false)
 fun ItemUpgradeView(){
-    Row(Modifier.fillMaxWidth().height(80.dp).width(320.dp).padding(start = 8.dp, end = 8.dp).clip(RoundedCornerShape(8.dp))) {
+    Row(Modifier.fillMaxWidth().height(80.dp).fillMaxWidth().padding(start = 8.dp, end = 8.dp).clip(RoundedCornerShape(8.dp))) {
         //Image of that item 物品圖片
         Box(
             modifier = Modifier
@@ -263,7 +301,7 @@ fun ItemUpgradeView(){
         ) {
             //Image of that item 物品圖片
             Image(
-                painter = painterResource(id = R.drawable.item_iron_img),
+                painter = painterResource(resource = Res.drawable.item_iron_img),
                 contentDescription = "Item Image",
                 modifier = Modifier
                     .height(64.dp)
@@ -272,7 +310,7 @@ fun ItemUpgradeView(){
 
             //Image of the currency icon 貨幣圖標
             Image(
-                painter = painterResource(id = R.drawable.coding_band_round),
+                painter = painterResource(resource = Res.drawable.coding_band_round),
                 contentDescription = "Upgrade Icon",
                 modifier = Modifier
                     .height(24.dp)
@@ -315,7 +353,7 @@ fun ItemUpgradeView(){
             Column(modifier = Modifier.wrapContentHeight().wrapContentWidth().padding(top = 4.dp, bottom = 4.dp, start = 8.dp)) {
                 Row(modifier = Modifier.wrapContentWidth().wrapContentHeight().weight(1f)) {
                     Image(
-                        painter = painterResource(id = R.drawable.coding_band_round),
+                        painter = painterResource(resource = Res.drawable.coding_band_round),
                         contentDescription = "Currency Icon",
                         modifier = Modifier
                             .height(16.dp)
@@ -329,6 +367,76 @@ fun ItemUpgradeView(){
                         style = FontSizeNormal14() + FontShadow(),
                         textAlign = TextAlign.Start,
                     )
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun ItemResearchView(){
+    Row(Modifier.fillMaxWidth().height(80.dp).fillMaxWidth().padding(start = 8.dp, end = 8.dp).clip(RoundedCornerShape(8.dp))) {
+        //Image of that item 物品圖片
+        Box(
+            modifier = Modifier
+                .height(64.dp)
+                .aspectRatio(1f)
+                .align(Alignment.CenterVertically)
+                .clip(RoundedCornerShape(8.dp))
+        ) {
+            //Image of that item 物品圖片
+            Image(
+                painter = painterResource(resource = Res.drawable.item_iron_img),
+                contentDescription = "Item Image",
+                modifier = Modifier
+                    .height(64.dp)
+                    .aspectRatio(1f)
+            )
+
+            //Image of the currency icon 貨幣圖標
+            Image(
+                painter = painterResource(resource = Res.drawable.coding_band_round),
+                contentDescription = "Upgrade Icon",
+                modifier = Modifier
+                    .height(24.dp)
+                    .aspectRatio(1f)
+                    .align(Alignment.BottomEnd)
+            )
+        }
+
+        Spacer(modifier = Modifier.width(4.dp))
+
+        //Unlock Requirement 解鎖需求
+        Column {
+            Text(
+                text = "解鎖條件：",
+                color = Color.White,
+                modifier = Modifier.fillMaxWidth(),
+                style = FontSizeNormal16() + FontShadow(),
+                textAlign = TextAlign.Start,
+            )
+            //Row of requirements 需求行
+            Row {
+                repeat(4){
+                    Column(modifier = Modifier.wrapContentSize().padding(4.dp)) {
+                        //Image of that item 物品圖片
+                        Image(
+                            painter = painterResource(resource = Res.drawable.item_iron_img),
+                            contentDescription = "Item Image",
+                            modifier = Modifier
+                                .height(40.dp)
+                                .aspectRatio(1f)
+                        )
+
+                        Text(
+                            text = "100",
+                            color = Color.Gray,
+                            modifier = Modifier.wrapContentWidth(),
+                            style = FontSizeNormal12() + FontShadow(),
+                            textAlign = TextAlign.Center,
+                        )
+                    }
                 }
             }
         }
@@ -358,7 +466,7 @@ fun CurrencyUI(){
                 ) {
                     //Currency Icon 貨幣圖標
                     Image(
-                        painter = painterResource(id = R.drawable.coding_band_round),
+                        painter = painterResource(resource = Res.drawable.coding_band_round),
                         contentDescription = "Currency Icon",
                         modifier = Modifier
                             .height(28.dp)
@@ -383,7 +491,7 @@ fun CurrencyUI(){
 
         //Gift Icon 禮物圖標
         Image(
-            painter = painterResource(id = R.drawable.ui_icon_gift),
+            painter = painterResource(resource = Res.drawable.ui_icon_gift),
             contentDescription = "Gift Icon",
             modifier = Modifier
                 .height(64.dp)
@@ -398,11 +506,11 @@ fun CurrencyUI(){
 @Composable
 fun BottomNavigationBar(selectedItem : MutableState<Int>) {
     val items = listOf(
-        NavigationItemData("兌換", ImageVector.vectorResource(id = R.drawable.ui_icon_grid)),
-        NavigationItemData("升級", ImageVector.vectorResource(id = R.drawable.ui_icon_upgrade)),
-        NavigationItemData("研究", ImageVector.vectorResource(id = R.drawable.ui_icon_research)),
-        NavigationItemData("轉讓", ImageVector.vectorResource(id = R.drawable.ui_icon_transfer)),
-        NavigationItemData("設定", ImageVector.vectorResource(id = R.drawable.ui_icon_setting)),
+        NavigationItemData("兌換", vectorResource(resource = Res.drawable.ui_icon_grid)),
+        NavigationItemData("升級", vectorResource(resource = Res.drawable.ui_icon_upgrade)),
+        NavigationItemData("研究", vectorResource(resource = Res.drawable.ui_icon_research)),
+        NavigationItemData("轉讓", vectorResource(resource = Res.drawable.ui_icon_transfer)),
+        NavigationItemData("設定", vectorResource(resource = Res.drawable.ui_icon_setting)),
     )
 
     NavigationBar(
@@ -413,7 +521,6 @@ fun BottomNavigationBar(selectedItem : MutableState<Int>) {
 
 }
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomePageScreenPreview() {
     IRCTheme(darkTheme = true) {
