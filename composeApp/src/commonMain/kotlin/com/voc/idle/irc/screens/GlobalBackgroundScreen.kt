@@ -51,8 +51,8 @@ lateinit var backgroundScreenHazeState : HazeState
 @Composable
 fun MakeBackground(modifier: Modifier = Modifier, screen: Screen = Screen.HomePage) {
     backgroundScreenHazeState = remember { HazeState() }
-    var isBlur = true;
-    var isGradient = true;
+    var isBlur = false;
+    var isGradient = false;
 
     Box(
         Modifier.haze(backgroundScreenHazeState)
@@ -61,7 +61,7 @@ fun MakeBackground(modifier: Modifier = Modifier, screen: Screen = Screen.HomePa
             painter = painterResource(Res.drawable.bg_universe_tim_bernhard),
             contentDescription = "",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize().blur(if (isBlur) 0.dp else 0.dp)
+            modifier = Modifier.fillMaxSize().blur(if (isBlur) 20.dp else 0.dp)
         )
         Box(
             modifier = Modifier.matchParentSize().background(

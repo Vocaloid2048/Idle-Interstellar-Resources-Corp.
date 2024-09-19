@@ -26,6 +26,7 @@ import com.russhwolf.settings.Settings
 import com.voc.idle.irc.components.HeaderData
 import com.voc.idle.irc.components.defaultHeaderData
 import com.voc.idle.irc.screens.HomePageScreen
+import com.voc.idle.irc.screens.MakeBackground
 import com.voc.idle.irc.screens.SplashPage
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
@@ -101,7 +102,7 @@ fun RootContent(
             SnackbarHost(snackbarHostState!!)
         },
     ) {
-        //MakeBackground(screen = screen)
+        MakeBackground(screen = screen)
         //Landscape can do ... ?
         Box(
             modifier = Modifier.haze(hazeStateRoot)

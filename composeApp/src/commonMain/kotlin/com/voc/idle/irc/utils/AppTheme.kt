@@ -41,18 +41,19 @@ val ProgressLevelBackground = Color(0xFF666666)
 val ProgressLevelPrimary = Color(0xFFDBC291)
 val AdditionalGreen = Color(0xFF43A047)
 val GradReachYellow = Color(0xFFFFD070)
+val ThemeColor = Color(0xFF00D1FF)
 
 val BezierEasing2O48 = CubicBezierEasing(0.3f, 0f, 0.3f, 1f)
 
 private val DarkColorScheme = darkColors(
-    primary = Purple80,
+    primary = ThemeColor,
     secondary = PurpleGrey80
 )
 
 val PageSafeArea = 16.dp
 
 private val LightColorScheme = lightColors(
-    primary = Purple40,
+    primary = ThemeColor,
     secondary = PurpleGrey40,
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -89,7 +90,6 @@ fun AppFont() = FontFamily(
 fun AppFontSpecial() = FontFamily(
     Font(Res.font.good_times_rg, weight = FontWeight.Medium)
 )
-
 
 @Composable
 fun AppTypography() = androidx.compose.material.Typography(

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
@@ -20,7 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.LinearGradient
 import androidx.compose.ui.unit.dp
+import utils.Pink40
+import utils.ThemeColor
 
 @Composable
 fun NavigationBarItem(
@@ -35,7 +39,11 @@ fun NavigationBarItem(
         modifier = Modifier.padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(modifier = Modifier.clip(CircleShape).clickable(onClick = onClick)){ icon() }
+        Box(modifier = Modifier.clip(CircleShape).clickable(onClick = onClick)){
+            Box(modifier = Modifier.padding(8.dp)){
+                icon()
+            }
+        }
 
         if (label != null) {
             Spacer(modifier = Modifier.height(4.dp))
@@ -48,7 +56,7 @@ fun NavigationBarItem(
 fun NavigationBar(
     items: List<NavigationItemData>,
     selectedIndex: Int,
-    onItemSelected: (Int) -> Unit
+    onItemSelected: (Int) -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().navigationBarsPadding(),
@@ -59,7 +67,7 @@ fun NavigationBar(
             NavigationBarItem(
                 selected = selectedIndex == index,
                 onClick = { onItemSelected(index) },
-                icon = { Icon(item.icon, contentDescription = null, tint = if (selectedIndex == index) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface) },
+                icon = { Icon(item.icon, contentDescription = null, tint = if (selectedIndex == index) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface, modifier = Modifier.size(24.dp)) },
                 label = { Text(item.label, color = if (selectedIndex == index) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium)) }
             )
         }

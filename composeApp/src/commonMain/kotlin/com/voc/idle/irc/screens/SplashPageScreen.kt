@@ -51,9 +51,9 @@ fun SplashPage(
             hasRefreshed.value = true
 
             withContext(Dispatchers.Main) {
-                if (!showPopup.value) {
+                //if (!showPopup.value) {
                     navController.navigateLimited(Screen.HomePage.route)
-                }
+                //}
             }
         }
     }
